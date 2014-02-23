@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8" />
+  <title>Cat Walk</title>
+ </head>
+ <body>
+  <audio  id = "sound" src="/static/horse.ogg"  ></audio>
+  <img style="position:absolute;" src="static/cat.gif" onmouseover="playsound();">
+  
+  <script>
+var img = document.getElementsByTagName('img')[0];
+if (localStorage.saved_state == null){
+    img.style.left = '0px';
+    var walkForwards = true;
+}else{
+    img.style.left = JSON.parse(localStorage.saved_state).position;
+    var walkForwards = JSON.parse(localStorage.saved_state).walk;
+}
+
+function playsound(){
+    console.log("playing sound");
+    document.getElementById("sound").play();
+}
+
+function catWalk() {
+  var currentLeft = parseInt(img.style.left);
+
+  if (walkForwards && (currentLeft > (window.innerWidth-img.width))) {
+    walkForwards = false;
+  }
+  if (!walkForwards && (currentLeft <= 0)) {
+    walkForwards = true;
+  }
+  
+  if (walkForwards) {
+    img.style.left = (currentLeft + 10) + 'px';
+  } else {
+    img.style.left = (currentLeft - 10) + 'px';
+  }
+
+  localStorage.saved_state= JSON.stringify({position:img.style.left , walk:walkForwards })
+}
+
+
+window.setInterval(catWalk, 50);
+  </script>
+
+ </body>
+</html>

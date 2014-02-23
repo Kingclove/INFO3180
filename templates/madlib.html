@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8" />
+  <title>MadLibs</title>
+  <script>
+    window.onload= function(){
+      setter();
+      localStorage.stories = "";
+    }
+  </script>
+ </head>
+ <body>
+ 
+ <h1>Mad Libs</h1>
+ 
+ <ul>
+  <li>Noun: <input onfocus ="save_stuff()" type="text" id="noun">
+  <li>Adjective: <input onfocus ="save_stuff()" type="text" id="adjective">
+  <li>Someone's Name: <input onfocus ="save_stuff()" type="text" id="name">
+ </ul>
+ 
+ <button id="lib-button">Lib it!</button>
+  
+ <div id="story"></div>
+  
+  <script>
+
+function libIt() {
+  var storyDiv = document.getElementById("story");
+  var name = document.getElementById("name").value;
+  var adjective = document.getElementById("adjective").value;
+  var noun = document.getElementById("noun").value;
+  var result = name + " married a " + adjective + " " + noun + "... So weird! <br>";
+  localStorage.stories = localStorage.stories+ result;
+  storyDiv.innerHTML = localStorage.stories;
+  clear();
+}
+
+function save_stuff(){
+  var name = document.getElementById("name").value;
+  var adjective = document.getElementById("adjective").value;
+  var noun = document.getElementById("noun").value;
+  localStorage.save_data= JSON.stringify({name_save:name, adjective_save:adjective, noun_save:noun});
+}
+
+function setter(){
+  if (localStorage.save_data =! "none") {
+    document.getElementById("name").value = JSON.parse(localStorage.save_data).name_save;
+    document.getElementById("adjective").value = JSON.parse(localStorage.save_data).adjective_save;
+    document.getElementById("noun").value = JSON.parse(localStorage.save_data).noun_save;
+  };
+  
+  var storyDiv = document.getElementById("story");
+  storyDiv.innerHTML = localStorage.stories;
+}
+
+function clear(){
+  document.getElementById("name").value = "";
+  document.getElementById("adjective").value = "";
+  document.getElementById("noun").value = "";
+  localStorage.save_data = "none" ;
+}
+
+var libButton = document.getElementById('lib-button');
+libButton.addEventListener('click', libIt);
+	</script>
+
+ </body>
+</html>
