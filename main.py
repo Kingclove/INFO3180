@@ -15,7 +15,12 @@ app = Flask(__name__.split('.')[0])
 @app.route('/')
 def start_game(name=None):
 	""" Return hello template at application root URL."""
-	return render_template('catwalk.html', name=name)
+	return render_template('menu.html', name=name)
+
 @app.route('/madlibs')
-def function():
+def mad():
 	return render_template('madlib.html')
+
+@app.route('/catwalk')
+def walkcat():
+	return render_template('catwalk.html')
